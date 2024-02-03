@@ -10,8 +10,6 @@
 
   const { data } = await useFetch('/api/getLeagues')
 
-  console.log(data.leagues)
-
 </script>
     
     

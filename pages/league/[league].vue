@@ -1,6 +1,6 @@
 <template>
     <NavBar />
-    <HomeBody :title="league" :cards="data.leagues" :path="path"/> 
+    <HomeBody :title="league" :cards="data" :path="path"/> 
 </template>
 
 <script setup>
@@ -11,7 +11,9 @@ const route = useRoute()
 
 const league = route.params.league
 
-const { data } = await useFetch('/api/getLeagues')
+const { data } = await useFetch(`/api/teams/${league}`)
+
+console.log(data.team)
 
 </script>
 <style scoped>
