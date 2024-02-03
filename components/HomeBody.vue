@@ -15,7 +15,7 @@
 <script>
 export default {
     name: 'HomeBody',
-    props: ['title', 'cards', 'path'],
+    props: ['title', 'cards', 'path']
 }
 
 </script>

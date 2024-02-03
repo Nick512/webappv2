@@ -1,36 +1,19 @@
 <template>
     <NavBar />
-    <HomeBody :title='title' :cards="leagues" :path="path" /> 
+    <HomeBody :title='title' :cards="data.leagues" :path="path" /> 
 </template>
+
+<script setup>
+  const title = 'Leagues'
+
+  const path = '/league/'
+
+  const { data } = await useFetch('/api/getLeagues')
+
+  console.log(data.leagues)
+
+</script>
     
-    <script>
-    export default {
-      name: 'Home',
-      data () {
-        return {
-          title: 'Leagues',
-          path: '/league/',
-          leagues: [
-      { 
-        id: 1,
-        name: 'NBA' },
-      { 
-        id: 2,
-        name: 'NFL' },
-        { 
-        id: 3,
-        name: 'MLB' },
-        { 
-        id: 4,
-        name: 'OHL' },
-        { 
-        id: 5,
-        name: 'MLS' }
-      ]}
-        }
-      }
-    
-    </script>
     
     <style scoped>
     a {
