@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   pages: true,
+  modules: ['@nuxtjs/supabase'],
 css: [
   "~/node_modules/bootstrap/dist/css/bootstrap.min.css"
 ]
