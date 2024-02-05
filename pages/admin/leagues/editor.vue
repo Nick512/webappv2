@@ -19,7 +19,8 @@
       </div>
     </div>
   </fieldset>
-  <button type="submit" class="btn btn-success">Update</button>
+  <button class="btn btn-success">Update</button>
+  <button @click="deleteLeague" class="btn btn-success delete-button">Delete</button>
 </form>
 
 <h3>Teams</h3>
@@ -41,6 +42,15 @@
 
 
 </template>
+
+<script setup >
+  const deleteLeague = async (league) => {
+    const { data: responseData } = await useFetch('/api/deleteleague', {
+            method: 'post',
+            body: { name: this.$route.query.league }
+        })
+  }
+</script>
 
 <script>
     export default {
@@ -80,6 +90,10 @@
     .button-holder {
         text-align: center;
         margin-bottom: 20px
+    }
+
+    .delete-button {
+      margin-left: 10px
     }
 
 </style>

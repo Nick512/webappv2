@@ -1,6 +1,13 @@
+import { serverSupabaseClient } from '#supabase/server'
+
+
+
+
 export default defineEventHandler(async (event) => {
     
-        
+    const client = await serverSupabaseClient(event)
+
+
             const NBA = [ {name: 'Lakers'}, {name: 'Bucks'}, {name: 'Pacers'}, {name: '76ers'}, {name: 'Bulls'}]
             const NFL = [{name: '49ers'}, {name: 'Chiefs'},{name: 'Lions'},{name: 'Broncos'},{name: 'Ravens'}]
             const OHL = [{name: 'Spitfires'}, {name: 'Gernals'},{name: 'Grey Hounds'},{name: 'Sting'},{name: 'Frontiacs'}]
@@ -8,19 +15,10 @@ export default defineEventHandler(async (event) => {
    // const body = await readBody(event)
    const { league } = event.context.params
 
-        if (league == "NBA") {
-            const team = NBA
-            return team
-        }
+   const { data } = await client.from('teams').select('*').eq('leagueName', league)
 
-        if (league == "NFL") {
-            const team = NFL
-            return team
-        }
+   return { teams: data }
 
-        if (league == "OHL") {
-            const team = OHL
-            return team
-        }
+        
 
   })

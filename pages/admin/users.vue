@@ -47,7 +47,7 @@
    
 
     let { data } = await useFetch('/api/getusers')
-    const users = useState('users', () => data.value.users)
+    const initUsers = useState('users', () => data.value.users)
 
 
 

@@ -8,7 +8,7 @@
 
   const path = '/league/'
 
-  const { data } = await useFetch('/api/getLeagues')
+  let { data } = await useFetch('/api/getLeagues')
 
 </script>
     
