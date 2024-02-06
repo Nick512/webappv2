@@ -7,11 +7,12 @@ export default defineEventHandler(async (event) => {
 
     const { team } = await readBody(event)
 
-    console.log(team)
+    const { data } = await supabase.from('leagues').select('id, numOfTeams').eq('name', team.leagueName)
 
-    const { data } = await supabase.from('leagues').select('id').eq('name', team.leagueName)
+    let updatedNumber = data[0].numOfTeams + 1
+    console.log(updatedNumber)
 
-    console.log(data[0].id)
+    const { data:error2 } = await supabase.from('leagues').update({numOfTeams: updatedNumber}).eq('name', team.leagueName)
 
    const { error } = await supabase.from('teams').insert({ name: team.name, leagueName: team.leagueName, leagueID: data[0].id })
 

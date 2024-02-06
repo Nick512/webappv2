@@ -91,13 +91,14 @@
     }
     refresh()
     addTeamView.value = false
+    newTeam.name = ''
   }
 
   //Delete Team Logic
   const deleteTeam = async(team) => {
     const { data: responseData } = await $fetch('/api/deleteteam', {
                   method: 'post',
-                  body: { team: team.name }
+                  body: { team: team }
               })
               refresh()
   }
