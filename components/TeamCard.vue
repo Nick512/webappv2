@@ -2,7 +2,7 @@
     <div class="card-holder col-sm-4 mb-3">
     <div class="card mx-auto">
   <div class="card-body">
-    <h5 class="card-title mb-4">{{this.team.name}}</h5>
+    <h5 class="card-title mb-4">{{team.team}}</h5>
     <div class="button-group" >
   <button type="button" class="btn btn-success">Edit</button>
   <button type="button" class="btn btn-success">Delete</button>
@@ -13,11 +13,8 @@
 
 </template>
 
-<script>
-    export default {
-  name: 'TeamCard',
-  props: ['team']
-}
+<script setup>
+  const team = defineProps(['team'])
 </script>
 
 <style scoped>

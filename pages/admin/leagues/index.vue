@@ -1,7 +1,7 @@
 <template>
     <NavBar />
     <AdminButtons />
-    <table v-if="mode != 'edit'" class="table table-striped table-hover w-75 mx-auto">
+    <table class="table table-striped table-hover w-75 mx-auto">
         <thead>
     <tr>
         <th scope="col">League ID</th>
@@ -11,7 +11,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="league in data.leagues" v-bind:key="league.name">
+    <tr v-for="league in leagues" v-bind:key="league.name">
         <th scope="row">{{ league.id }}</th>
         <td> {{ league.name }}</td>
         <td>{{ league.numOfTeams }}</td>
@@ -20,46 +20,50 @@
     </tbody>
 
     </table>
-
-    <form v-if="mode == 'add'" class="w-75 mx-auto rounded">
+    <div class="w-75 mx-auto rounded">
         <div class="form-group w-75 p-2 mx-auto">
+            <div v-if="error.minlength == true" class="alert alert-danger" role="alert">
+                League name must have 3 or more characters
+            </div>            
             <input v-model="newLeague.name" type="string" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name of League">
         </div>
-        <button @click="newLeagueSubmit(newLeague)" type="submit" class="btn btn-success">Add League</button>
-    </form>
-
-    <form v-if="mode == 'edit'" class="w-75 mx-auto rounded">
-        <div class="form-group w-75 p-2 mx-auto">
-            <input v-model="leagueEdit.name" type="string" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        </div>
-        <button type="submit" class="btn btn-success">Update</button>
-    </form>
-
-
-    <div class="button-row w-50 mx-auto">
-        <button @click="mode = 'add'" v-if="mode == 'view'" class="btn btn-success w-50 m-2">Add League</button>
+        <button @click="newLeagueSubmit(newLeague)" class="btn btn-success">Add League</button>
     </div>
 </template>
 
 <script setup>
 
-    let mode = ref('view')
+const router = useRouter()
 
     let { data } = await useFetch('/api/getLeagues')
+
+    let leagues = data.value.leagues
+
+    let error = ref({
+        minlength: false
+    })
 
     let newLeague = reactive({
         name: ''
     })
 
     const newLeagueSubmit = async(newLeague) => {
-        const { data: responseData } = await useFetch('/api/newleague', {
-            method: 'post',
-            body: { name: newLeague.name }
-        })
-
-        newLeague = {
-            name: ''
+        if (newLeague.name.length >= 3) {
+            try {
+            const { data: responseData } = await $fetch('/api/newleague', {
+                method: 'post',
+                body: { name: newLeague.name }
+            })}
+            catch(error) {
+                throw error
+            }
+            location.reload()
+        newLeague.name = ''
+        } else {
+            error.value.minlength = true
         }
+    
+    
     }
 
     

@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
    // const body = await readBody(event)
 
-   //console.log(body.name)
+   console.log(body)
   
 
    const { error } = await supabase.from('leagues').insert({ name: body.name })
