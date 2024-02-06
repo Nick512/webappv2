@@ -5,7 +5,7 @@
     <h5 class="card-title mb-4">{{team.team}}</h5>
     <div class="button-group" >
   <button type="button" class="btn btn-success">Edit</button>
-  <button type="button" class="btn btn-success">Delete</button>
+  <button @click="$emit('delete')" type="button" class="btn btn-success">Delete</button>
 </div>
   </div>
 </div>
