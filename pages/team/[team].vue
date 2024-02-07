@@ -1,7 +1,7 @@
 <template>
     <NavBar />
     <div class="team-title mx-auto">
-        <div class='title-content fw-bold'><h2>{{ team.title }}</h2></div>
+        <div class='title-content fw-bold'><h2>{{ team.name }}</h2></div>
     </div>
     <div class="record-box rounded w-75 mx-auto">
         <div class="record fw-bold"><h1>RECORD:<br>{{ team.record }}</h1></div>
@@ -18,10 +18,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="player in team.players" v-bind:key="player.name">
-            <td scope="row">{{ player.firstname }}</td>
-            <td> {{ player.lastname }}</td>
-            <td>{{ player.plusminus }}</td>
+            <tr v-for="player in team.players" v-bind:key="player.id">
+            <td scope="row">{{ player.firstName }}</td>
+            <td> {{ player.lastName }}</td>
+            <td>{{ player.plusMinus }}</td>
             </tr>
         </tbody>
     </table>
@@ -30,41 +30,21 @@
     </div>
 </template>
     
-    <script>
-    export default {
-      name: 'Team',
-      data () {
-        return {
-          team: {
-            title: 'Lakers',
-            record: '10-7',
-            players: [ {
-                firstname: 'player',
-                lastname: '1',
-                plusminus: '+2'
-                },
-                {
-                firstname: 'player',
-                lastname: '2',
-                plusminus: '0'
-                },
-                {
-                firstname: 'player',
-                lastname: '3',
-                plusminus: '-2'
-                }
-            ],
-            scheudle: [
-                {
+<script setup>
 
-                }
-            ]
-          },
-          path: '/team/'
-        }
-      }
-    }
-    </script>
+    //Get Team Info
+    const route = useRoute()
+    
+    const { data } = await useFetch(`/api/getteaminfo?team=${route.params.team}`)
+    let team = data.value.team[0]
+    console.log(team)
+
+    //Create record
+    team.record = `${team.wins}/${team.loses}`
+    
+
+</script>
+        
     
     <style scoped>
     .team-title {

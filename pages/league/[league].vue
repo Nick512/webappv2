@@ -5,13 +5,13 @@
 
 <script setup>
 
+//Get Teams
 const path = '/team/'
-
 const route = useRoute()
-
 const league = route.params.league
-
 const { data } = await useFetch(`/api/teams/${league}`)
+
+
 
 </script>
 <style scoped>

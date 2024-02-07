@@ -1,12 +1,13 @@
 <template>
     <div class="col-sm-4">
      <div class="card league-card">
-       <div @click="route" class="card-body">
+       <div @click="$emit('cardClick')" class="card-body">
          <p class="card-text">{{ title }}</p>
        </div>
      </div>
    </div>
  </template>
+
  
  <script>
  
@@ -16,6 +17,7 @@
    methods: {
      route () {
        this.$router.push({ path: this.path+this.title  })
+       
      }
    }
    }

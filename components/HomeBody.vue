@@ -1,24 +1,27 @@
 <template>
     <div class="card card-main rounded">
   <div class="card-body fw-bold">
-    {{title}}
+    {{props.title}}
   </div>
   <div class="league-holder">
   <div class="row">
-    <InfoCard v-for="card in cards" v-bind:key="card.id" :title="card.name" :path="path" />
+    <InfoCard @cardClick="cardClick(card)" v-for="card in props.cards" v-bind:key="card.id" :title="card.name" :path="props.path" />
 </div>
 </div>
 </div>
 </template>
 
 
-<script>
-export default {
-    name: 'HomeBody',
-    props: ['title', 'cards', 'path']
+<script setup>
+const router = useRouter()
+const props = defineProps(['title', 'cards', 'path'])
+
+const cardClick = (item) => {
+    router.push({ path: props.path+item.name  })
 }
 
 </script>
+
 <style scoped>
     .card-main {
         width: 80%;
