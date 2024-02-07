@@ -1,6 +1,6 @@
 <template>
     <NavBar />
-    <h2>{{ league }}</h2>
+    <h2>{{ title }}</h2>
     <div class="w-50 top-form mx-auto p-3">
   <div class="row mb-3">
     <label for="inputName" class="col-sm-2 col-form-label">League Name:</label>
@@ -12,14 +12,14 @@
     <legend class="col-form-label col-sm-2 pt-0">League Enabled:</legend>
     <div class="col-sm-10">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="league-enable" id="gridRadios1" value="option1">
+        <input class="form-check-input" type="checkbox" name="league-enable" id="gridRadios1" v-model="status">
         <label class="form-check-label" for="league-enable">
           Disabled
         </label>
       </div>
     </div>
   </fieldset>
-  <button class="btn btn-success">Update</button>
+  <button @click="editLeague" class="btn btn-success">Update</button>
   <button @click="deleteLeague" class="btn btn-success delete-button">Delete</button>
 </div>
 
@@ -48,25 +48,39 @@
 
 <script setup>
   const router = useRouter()
-  const league = useRoute().query.league
+  const league = ref(useRoute().query.league)
+  let status = ref(useRoute().query.disabled)
+  let title = useRoute().query.league
 
   
   //Fetch teams
-  let { data, refresh } = await useFetch(`/api/getteams?league=${league}`)
-  
-  const leagueEdit = async () => {
+  let { data, refresh } = await useFetch(`/api/getteams?league=${league.value}`)
 
-  }
-
+  //Delete League
   const deleteLeague = async () => {
     const { data: responseData } = await $fetch('/api/deleteleague', {
             method: 'post',
-            body: { name: league }
+            body: { name: useRoute().query.league }
         })
 
         router.push({path: '/admin/leagues'})
   }
 
+
+  //Update League Name / Disable League
+
+  const editLeague = async() => {
+    const { error } = await $fetch('/api/editleague', {
+            method: 'post',
+            body: { name: useRoute().query.league, disabled: useRoute().query.disabled, newName: league.value, status: status.value }
+        }).then(() => {
+          //Go to new league edit view
+          router.push({path: '/admin/leagues/'})
+        })
+
+        
+        
+  }
   
   //Add Team Logic
   let addTeamView = ref(false)
@@ -77,7 +91,7 @@
 
   let newTeam = reactive({
     name: '',
-    leagueName: league
+    leagueName: useRoute().query.league
   })
 
   const createTeam = async() => {

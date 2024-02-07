@@ -7,6 +7,7 @@
         <th scope="col">League ID</th>
         <th scope="col">League Name</th>
         <th scope="col">Number of Teams</th>
+        <th scope="col">Disabled</th>
         <th scope="col">Edit</th>
     </tr>
     </thead>
@@ -15,7 +16,8 @@
         <th scope="row">{{ league.id }}</th>
         <td> {{ league.name }}</td>
         <td>{{ league.numOfTeams }}</td>
-            <td><NuxtLink :to="{ path: '/admin/leagues/editor', query: { league: league.name }}" ><button class="btn btn-success w-50 editButton">o</button></NuxtLink></td>
+        <td>{{ league.disabled }}</td>
+        <td><NuxtLink :to="{ path: '/admin/leagues/editor', query: { league: league.name, disabled: league.disabled }}" ><button class="btn btn-success w-50 editButton">o</button></NuxtLink></td>
     </tr>
     </tbody>
 
