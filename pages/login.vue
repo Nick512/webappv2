@@ -9,7 +9,9 @@
   <div class="form-group w-75 mx-auto">
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
   </div>
+  <div class="button-holder w-50 mx-auto">
   <nuxt-link to='/admin'><button type="submit" class="btn btn-success w-50">Submit</button></nuxt-link>
+</div>
 </form>
 </div>
 
@@ -45,6 +47,10 @@
       input {
         text-align: center;
         border: 1px solid black
+      }
+
+      .button-holder {
+        text-align: center !important;
       }
 
     </style>
