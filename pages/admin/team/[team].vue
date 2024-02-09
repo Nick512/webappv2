@@ -55,7 +55,7 @@
 
 
 
-<div class="row card-holder w-75 mx-auto"><PlayerCard @delete="deleteTeam(team)" @edit="editTeam(team)" v-for="player in team.players" :bind:key="player.name" :player="player" /></div>
+<div class="row card-holder w-75 mx-auto"><PlayerCard v-for="player in team.players" :bind:key="player.name" :player="player" /></div>
 
     
 
@@ -68,7 +68,6 @@
     //Fetch Team info
     const { data } = await useFetch(`/api/getteaminfo?team=${route.params.team}`)
     let team = data.value.team[0]
-    console.log(team)
 
     //Set team enable status
     let status = ref(team.disabled)
