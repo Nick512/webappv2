@@ -19,7 +19,7 @@
       </div>
     </div>
   </fieldset>
-  <button @click="editLeague" class="btn btn-success">Update</button>
+  <button @click="editTeam" class="btn btn-success">Update</button>
 </div>
 
 <h3>Players</h3>
@@ -68,6 +68,7 @@
     //Fetch Team info
     const { data } = await useFetch(`/api/getteaminfo?team=${route.params.team}`)
     let team = data.value.team[0]
+    console.log(team)
 
     //Set team enable status
     let status = ref(team.disabled)
@@ -77,12 +78,9 @@
     let newName = ref(team.name)
 
     const editTeam = async() => {
-    const { error } = await $fetch('/api/editTeam', {
+    const { error } = await $fetch('/api/editteam', {
             method: 'post',
-            body: { id: team.id, name: team.name, disabled: team.disabled, newName: league.value, status: status.value }
-        }).then(() => {
-          //Go to new league edit view
-          router.push({path: '/admin/leagues/'})
+            body: { id: route.params.team, name: team.name, disabled: team.disabled, newName: newName.value, status: status.value }
         })}
 
         //Create Player
