@@ -17,7 +17,13 @@ const router = useRouter()
 const props = defineProps(['title', 'cards', 'path'])
 
 const cardClick = (item) => {
-    router.push({ path: props.path+item.name  })
+    if (props.path == '/league/') {
+        router.push({ path: props.path+item.name  })
+    } 
+
+    if (props.path == '/team/') {
+        router.push({ path: props.path+item.id  })
+    }
 }
 
 </script>

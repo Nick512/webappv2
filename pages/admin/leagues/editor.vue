@@ -39,7 +39,7 @@
 
 
 
-<div v-if="data" class="row card-holder w-75 mx-auto"><TeamCard @delete="deleteTeam(team)" v-for="team in data.teams" :bind:key="team.name" :team="team.name" /></div>
+<div v-if="data" class="row card-holder w-75 mx-auto"><TeamCard @delete="deleteTeam(team)" @edit="editTeam(team)" v-for="team in data.teams" :bind:key="team.name" :team="team.name" /></div>
 
     
 
@@ -115,6 +115,11 @@
                   body: { team: team }
               })
               refresh()
+  }
+
+  //Edit Team Route
+  const editTeam = (team) => {
+    router.push({path: `/admin/team/${team.id}`})
   }
 
 </script>

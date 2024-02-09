@@ -29,7 +29,9 @@
             </div>            
             <input v-model="newLeague.name" type="string" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name of League">
         </div>
-        <button @click="newLeagueSubmit(newLeague)" class="btn btn-success">Add League</button>
+        <div class="button-holder">
+            <button @click="newLeagueSubmit(newLeague)" class="btn btn-success">Add League</button>
+        </div>
     </div>
 </template>
 
@@ -85,5 +87,10 @@ const router = useRouter()
 
       .editButton {
         border-radius: 50%
+      }
+
+      .button-holder {
+        text-align: center !important;
+        padding-top: 10px
       }
 </style>

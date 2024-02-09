@@ -21,4 +21,8 @@
     .view-selector {
     margin-top: 20px;
     }  
+
+    .button-holder {
+        text-align: center !important;
+    }
 </style>

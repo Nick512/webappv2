@@ -13,8 +13,10 @@ export default defineEventHandler(async (event) => {
     wins,
     loses,
     leagueName,
+    disabled,
     players ( id, firstName, lastName, plusMinus, number )
-    `).eq('name', team) 
+    `).eq('id', team) 
+
 
 
 
