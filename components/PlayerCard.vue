@@ -4,46 +4,47 @@
 
 
     <div v-if="editView == false" class="card-body">
-      <h5 class="card-title mb-2">{{fullName}}</h5>
-      <h5 class="card-title mb-2">#{{player.number}}</h5>
-      <h5 class="card-title mb-2">{{player.plusMinus}}</h5>
+      <h5 class="card-title mb-3">{{fullName}}</h5>
+      <h5 class="card-title mb-3">#{{player.number}}</h5>
+      <h5 class="card-title mb-3">{{player.plusMinus}}</h5>
       <div class="button-group" >
-          <button @click="editView == true" type="button" class="btn btn-success">Edit</button>
+          <button @click="editView = true" type="button" class="btn btn-success">Edit</button>
           <button @click="$emit('delete')" type="button" class="btn btn-success">Delete</button>
       </div>
     </div>
 
-    <div class='form' v-if="editView == true">
+    <div v-if="editView == true" class='form'>
   <div class="mb-3">
     <div class="row m-4">
         <div class="col">
-            <label class="form-label">First Name:</label>
-            <input type="text" class="form-control" placeholder="First name" aria-label="First name" v-model="player.firstName">
+            
+            <input type="text" class="form-control" placeholder="First name" aria-label="First name" v-model="newPlayer.firstName">
         </div>
         <div class="col">
-            <label class="form-label">Last Name:</label>
-            <input type="text" class="form-control" placeholder="Last name" aria-label="Last name" v-model="player.lastName"> 
+            
+            <input type="text" class="form-control" placeholder="Last name" aria-label="Last name" v-model="newPlayer.lastName"> 
         </div>
 
     <div class="row mt-3">
         <div class="col-12">
-            <label class="form-label">Number:</label>
-            <input type="text" class="form-control w-50 mx-auto" placeholder="number" aria-label="number" v-model="player.number"> 
+            
+            <input type="text" class="form-control w-50 mx-auto" placeholder="number" aria-label="number" v-model="newPlayer.number"> 
         </div>
     </div>
 
     <div class="row mt-3">
         <div class="col-12">
-            <label class="form-label">+/-</label>
-            <input type="text" class="form-control w-50 mx-auto" placeholder="+/-" aria-label="plusMinus" v-model="player.plusMinus"> 
+            
+            <input type="text" class="form-control w-50 mx-auto" placeholder="+/-" aria-label="plusMinus" v-model="newPlayer.plusMinus"> 
         </div>
       </div>
     </div>
   </div>
 
-<div class="button-holder col-12">
-    <button class="btn btn-success mb-3 w-23 mx-auto">Update</button>
-</div>
+  <div class="button-group" >
+          <button @click="updateButton" type="button" class="btn btn-success">Update</button>
+          <button @click="editView = false" type="button" class="btn btn-success">Back</button>
+      </div>
 
 </div>
 
@@ -56,11 +57,23 @@
 
 <script setup>
   const { player } = defineProps(['player'])
-  const fullName = `${player.firstName} ${player.lastName}`
-  let editView = ref(true)
+  const emit = defineEmits(['update'])
 
-  //Edit Name of Player
- 
+  const newPlayer = player
+  const fullName = `${player.firstName} ${player.lastName}`
+  let editView = ref(false)
+
+  const updateButton = () => {
+    
+    console.log(player)
+    console.log(newPlayer)
+    if (player != newPlayer) {
+      emit('update', player)
+    } 
+    editView.value = false
+    
+  }
+
 
   
 </script>

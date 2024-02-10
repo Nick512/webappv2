@@ -55,7 +55,7 @@
 
 
 
-<div class="row card-holder w-75 mx-auto"><PlayerCard v-for="player in team.players" :bind:key="player.name" :player="player" /></div>
+<div class="row card-holder w-75 mx-auto"><PlayerCard v-for="player in team.players" :bind:key="player.name" :player="player" @delete="deletePlayer(player)" @update="updatePlayer"/></div>
 
     
 
@@ -66,8 +66,10 @@
     const route = useRoute()
 
     //Fetch Team info
-    const { data } = await useFetch(`/api/getteaminfo?team=${route.params.team}`)
-    let team = data.value.team[0]
+    
+    const { data, refresh } = await useFetch(`/api/getteaminfo?team=${route.params.team}`)
+
+    let team = reactive(data.value.team[0])
 
     //Set team enable status
     let status = ref(team.disabled)
@@ -95,19 +97,41 @@
 
         const createPlayer = async() => {
             
-            
+            //API Call
             const { data: responseData } = await $fetch('/api/newplayer', {
                 method: 'post',
                 body: { player: newPlayer }
+            })  
+            //Reset new player object
+            newPlayer.firstName = ''
+            newPlayer.lastName = ''
+            newPlayer.number = ''
+            newPlayer.plusMinus = ''
+
+            //Set view back to normal
+           location.reload()
+            
+  
+        }
+
+        //Delete Player Logic
+
+        const deletePlayer = async(player) => {
+          const { data: responseData } = await $fetch('/api/deleteplayer', {
+                method: 'post',
+                body: { player: player }
             })
-            newLeague = {
-            firstName: '',
-            lastName: '',
-            number: '',
-            plusMinus: ''
-            }
+            
+            location.reload() 
         }
     
+        //Update Player logic
+        const updatePlayer = async(updatedPlayer) => {
+          const { data: responseData } = await $fetch('/api/updateplayer', {
+                method: 'post',
+                body: { player: updatedPlayer }
+            })
+        }
 </script>
 
 <style scoped>
