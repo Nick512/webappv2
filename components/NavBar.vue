@@ -15,11 +15,16 @@
           <div class="d-lg-flex col-lg-3 justify-content-lg-end">
             
             
-                <NuxtLink to="/login">
-                    <button class="btn btn-success">
-              Login
+        <NuxtLink v-if="!user" to="/login">
+            <button class="btn btn-success">
+                Login
             </button>
         </NuxtLink>
+
+        <button v-if="user" @click="logOut" class="btn btn-success">
+            Log Out
+        </button>
+        
         
           </div>
         </div>
@@ -27,9 +32,14 @@
     </nav>
 </template>
 
-<script>
-export default {
-  name: 'NavBar'
+<script setup>
+const supabase = useSupabaseClient()
+const user = useSupabaseUser()
+
+const logOut = async () => {
+  const { error } = await supabase.auth.signOut()
+  if (error) console.log(error)
+  navigateTo('/')
 }
 </script>
 

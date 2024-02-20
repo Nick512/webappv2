@@ -8,6 +8,7 @@ const user = useSupabaseUser()
 
 watch(user, () => {
   if (user.value) {
+      const loggedIn = useState('loggedIn', () => true)
       // Redirect to protected page
       return navigateTo('/admin')
   }
