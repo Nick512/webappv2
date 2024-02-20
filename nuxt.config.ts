@@ -11,7 +11,12 @@ export default defineNuxtConfig({
   pages: true,
   modules: ['@nuxtjs/supabase'],
   supabase: {
-    redirect: false
+      redirectOptions: {
+      login: '/login',
+      callback: '/confirm',
+      exclude: ['/', '/league/*', '/team/*'],
+      cookieRedirect: false,
+    }
   },
 css: [
   "~/node_modules/bootstrap/dist/css/bootstrap.min.css"
