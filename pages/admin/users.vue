@@ -14,8 +14,7 @@
     <tbody>
     <tr v-for="user in users" v-bind:key="user.id">
         <th scope="row">{{ user.id }}</th>
-        <td >{{ user.username }}</td>
-        <td>{{ user.role }}</td>
+        <td >{{ user.email }}</td>
     </tr>
     </tbody>
 
@@ -46,12 +45,8 @@
 
    
 
-    let { data } = await useFetch('/api/getusers')
-    const initUsers = useState('users', () => data.value.users)
-
-
-
-    //let users = data.users
+    let { data } = await useFetch('/api/users')
+    const users = data.value.users
 
     let mode = useState('mode', () => 'view')
 
