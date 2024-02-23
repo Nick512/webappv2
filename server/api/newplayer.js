@@ -1,9 +1,12 @@
-import { serverSupabaseServiceRole } from '#supabase/server'
+import { serverSupabaseClient } from '#supabase/server'
+import protectRoute from '../protectRoute'
 
 
 export default defineEventHandler(async (event) => {
     
-    const supabase = await serverSupabaseServiceRole(event)
+    await protectRoute(event)
+
+    const supabase = await serverSupabaseClient(event)
 
     const { player } = await readBody(event)
 
